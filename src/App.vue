@@ -1,24 +1,35 @@
 <template>
   <div id="app">
-    <navbar />
-    <div id="picBlock"><img class="center" src="https://placem.at/people?w=2000&h=500" /></div>
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <Home/>
+    <h1 id="title" class="text-left">{{ webName }}</h1>
+    <navbar @login="showModal = true" />
+
+    <LoginModal v-if="showModal" @close="showModal = false" />
+    <router-view />
+    <div id="picBlock">
+      <span style="height=500;">&nbsp;</span>
+    </div>
+    <Footer />
   </div>
 </template>
 
 <script>
-// import HelloWorld from "./components/HelloWorld.vue";
 import Navbar from "./components/NavBar.vue";
-import Home from "./components/Home.vue";
+import Footer from "./components/Footer.vue";
+import GlobalVue from "./config/Global.vue";
+import LoginModal from "./components/LoginModal";
 
 export default {
   name: "App",
-  
+  data() {
+    return {
+      webName: GlobalVue.webName,
+      showModal: false,
+    };
+  },
   components: {
-    // HelloWorld,
     Navbar,
-    Home
+    Footer,
+    LoginModal,
   },
 };
 </script>
@@ -29,12 +40,18 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  background-color: #f2eee5;
   margin-top: 60px;
 }
 
 #picBlock {
-        background-color: aquamarine;
-        background-size: cover;
-    }
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: auto;
+}
+
+#title {
+  margin: 10px;
+}
 </style>
