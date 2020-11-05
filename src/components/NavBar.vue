@@ -29,7 +29,7 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item center-right">
           <!-- <router-link class="nav-link" to="/login">登入</router-link> -->
-          <a href="#" class="nav-link" @click="$emit('login')">登入</a>
+          <a href="#" class="nav-link" @click="$emit('login')">{{ getText }}</a>
         </li>
       </ul>
     </div>
@@ -38,10 +38,12 @@
 
 <script>
 import GlobalVue from "../config/Global.vue";
+// import store from '../store';
 export default {
   data() {
     return {
       features: GlobalVue.features,
+      // loginText: this.$store.getters.loginText,
       navbarStatus: {
         isFix: false,
         offsetTop: 0,
@@ -49,6 +51,11 @@ export default {
       },
     };
   },
+  computed: {
+      getText(){
+        return this.$store.getters.getLoginText;
+      }
+  }
 };
 </script>
 

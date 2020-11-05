@@ -16,7 +16,7 @@
 import Navbar from "./components/NavBar.vue";
 import Footer from "./components/Footer.vue";
 import GlobalVue from "./config/Global.vue";
-import LoginModal from "./components/LoginModal";
+import LoginModal from "./components/auth/LoginModal";
 
 export default {
   name: "App",
