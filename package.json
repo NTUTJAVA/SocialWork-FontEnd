@@ -10,7 +10,7 @@
   "dependencies": {
     "bootstrap": "^4.5.2",
     "core-js": "^3.6.5",
-    "jquery": "^1.12.4",
+    "jquery": "^3.5.0",
     "popper.js": "^1.16.1",
     "vue": "^3.0.0-rc.10",
     "vue-router": "^4.0.0-0",
