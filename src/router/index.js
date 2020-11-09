@@ -10,7 +10,12 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import(/* webpackChunkName: "about" */ '../components/auth/Login.vue')
+    component: () => import('../components/auth/Login.vue')
+  },
+  {
+    path: '/register',
+    name: 'retister',
+    component: () => import('../components/auth/Register.vue')
   },
 ]
 

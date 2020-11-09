@@ -17,14 +17,13 @@
 </template>
 
 <style scoped>
-#bodyBlock {
-  background-color: #f2eee5;
-}
 .jumbotron {
   margin-top: 15px;
-  background-color: #c3e2dd;
   margin-bottom: 0px;
+  background-color:#FFFFFF;
   border-radius: 30px;
+  border-style:solid;
+  border-color: #C3E2DD;
 }
 .leftSide {
   text-align: left;

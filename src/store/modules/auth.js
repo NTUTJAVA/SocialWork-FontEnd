@@ -8,21 +8,32 @@ export default {
     },
     mutations: {
         SET_AUTH(state, options) {
-            console.log(options.nickname)
             state.token = options.token,
                 state.isLogin = options.isLogin,
                 state.nickname = options.nickname
-        }
+        },
+        LOG_OUT(state, options) {
+            state.token = options.token,
+                state.isLogin = options.isLogin,
+                state.nickname = options.nickname
+        },
     },
     actions: {
         setAuth(context, options) {
             context.commit('SET_AUTH', options);
+        },
+        logout(context) {
+            console.log(`in action`);
+            window.localStorage.removeItem("vuex");
+            context.commit('LOG_OUT', { isLogin: false, token: '', nickname: '' })
         }
     },
     getters: {
-        getLoginText: state => {
-            return state.isLogin?state.nickname+ " 歡迎回來":"登入";
-            // return state.nickname;
+        getNickname: state => {
+            return state.nickname;
+        },
+        getIsLogin: state => {
+            return state.isLogin;
         }
     }
 }

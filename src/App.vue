@@ -1,14 +1,12 @@
 <template>
   <div id="app">
-    <h1 id="title" class="text-left">{{ webName }}</h1>
+    <h1 id="title" class="text-left title">{{ webName }}</h1>
     <navbar @login="showModal = true" />
-
-    <LoginModal v-if="showModal" @close="showModal = false" />
     <router-view />
     <div id="picBlock">
       <span style="height=500;">&nbsp;</span>
     </div>
-    <Footer />
+    <Footer v-bind:style="{minHeight: Height+'px'}" />
   </div>
 </template>
 
@@ -16,7 +14,6 @@
 import Navbar from "./components/NavBar.vue";
 import Footer from "./components/Footer.vue";
 import GlobalVue from "./config/Global.vue";
-import LoginModal from "./components/auth/LoginModal";
 
 export default {
   name: "App",
@@ -29,19 +26,22 @@ export default {
   components: {
     Navbar,
     Footer,
-    LoginModal,
   },
 };
 </script>
 
 <style>
+.title {
+  font-weight:bold;
+}
+html, body {
+  height: 100%;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background-color: #f2eee5;
-  margin-top: 60px;
 }
 
 #picBlock {
