@@ -1,6 +1,5 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light col-12 col-sm-12">
-    <!-- <a class="navbar-brand" href="#">Navbar</a> -->
     <router-link class="navbar-brand nav-link" to="/">Home</router-link>
     <button
       class="navbar-toggler"
@@ -16,7 +15,11 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item" v-for="(item, index) in features" :key="index">
+        <li
+          class="nav-item"
+          v-for="(item, index) in getRenderList"
+          :key="index"
+        >
           <router-link class="nav-link" :to="{ path: item.routerPath }">{{
             item.name
           }}</router-link>
@@ -56,6 +59,7 @@
 <script>
 import GlobalVue from "../config/Global.vue";
 import LoginModal from "./auth/LoginModal";
+
 export default {
   data() {
     return {
@@ -75,10 +79,15 @@ export default {
     getIsLogin() {
       return this.$store.getters.getIsLogin;
     },
+    getRenderList() {
+      const result = GlobalVue.features.filter(
+        (target) => target.needLogin ===false || ( target.needLogin && this.getIsLogin)
+      );
+      return result;
+    },
   },
   methods: {
     logout() {
-      console.log(`in method`);
       this.$store.dispatch("logout");
     },
   },
@@ -89,8 +98,8 @@ export default {
 </script>
 
 <style scoped>
-nav{
-  box-shadow:1px 1px 1px 1px #cccccc;
+nav {
+  box-shadow: 1px 1px 1px 1px #cccccc;
 }
 #login {
   margin: 0px auto;

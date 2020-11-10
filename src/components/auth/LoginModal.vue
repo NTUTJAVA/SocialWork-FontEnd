@@ -91,6 +91,7 @@
 .modal-container {
   width: 30%;
   margin: 0px auto;
+  margin-bottom: 15%;
   padding: 20px 30px;
   background-color: #fff;
   border-radius: 2px;
@@ -146,7 +147,6 @@ span {
 
 <script>
 import auth from "../../apis/auth";
-// import req from '../../apis/http';
 export default {
   props: {
     showData: Boolean,
@@ -173,6 +173,7 @@ export default {
             token: res.token,
             nickname: res.usernickname,
             isLogin: true,
+            userId: res.userId
           });
           this.loginData.username = "";
           this.loginData.password = "";

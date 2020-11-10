@@ -27,6 +27,7 @@
           class="form-control"
           v-model="password"
           maxlength="15"
+          ref="password"
         />
       </div>
       <div class="form-group">
@@ -35,7 +36,7 @@
             >&nbsp;&nbsp;&nbsp;&nbsp;{{ emailErrorMsg }}</span
           ></label
         >
-        <input type="email" class="form-control" v-model="email" />
+        <input type="email" class="form-control" v-model="email" ref="email" />
       </div>
       <div class="form-group">
         <label for="nickname"
@@ -48,11 +49,41 @@
           class="form-control"
           maxlength="15"
           v-model="nickname"
+          ref="nickname"
         />
       </div>
     </form>
     <button class="btn btn-primary" @click="submit">送出</button>
   </div>
+  <Alert
+    :show="showAlert"
+    @close="showAlert = false"
+    :callback="callback"
+    :showOkBtn="true"
+  >
+    <template v-slot:title
+      ><h3 style="color: #42b983; font-size: 50px">
+        <svg
+          width="1em"
+          height="1em"
+          viewBox="0 0 16 16"
+          class="bi bi-check-circle"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+          />
+          <path
+            fill-rule="evenodd"
+            d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"
+          />
+        </svg>
+        註冊成功
+      </h3></template
+    >
+  </Alert>
 </template>
 
 <style scoped>
@@ -84,6 +115,7 @@ label {
 
 <script>
 import req from "../../apis/http";
+import Alert from "../global/Alert";
 export default {
   data() {
     return {
@@ -100,6 +132,7 @@ export default {
       nicknameError: false,
       nicknameErrorMsg: "",
       cansubmit: false,
+      showAlert: false,
     };
   },
   watch: {
@@ -161,10 +194,7 @@ export default {
   },
   methods: {
     submit() {
-      if (
-        !(this.usernameError && this.passwordError && this.emailError,
-        this.nicknameError)
-      ) {
+      if (this.checkinput()) {
         req("post", "/auth/register", {
           username: this.username,
           password: this.password,
@@ -172,17 +202,59 @@ export default {
           nickname: this.nickname,
         })
           .then(() => {
-            this.$router.push("/");
+            this.showAlert = true;
           })
           .catch((error) => {
             this.usernameError = true;
             this.usernameErrorMsg = error.response.data;
             this.$refs.username.focus();
           });
-      } else {
-        this.$refs.username.focus();
       }
     },
+    checkinput() {
+      let checkData = [
+        {
+          name: "username",
+          data: this.username,
+          isError: this.usernameError,
+          msg: this.usernameErrorMsg,
+        },
+        {
+          name: "password",
+          data: this.password,
+          isError: this.passwordError,
+          msg: this.passwordErrorMsg,
+        },
+        {
+          name: "email",
+          data: this.email,
+          isError: this.emailError,
+          msg: this.emailErrorMsg,
+        },
+        {
+          name: "nickname",
+          data: this.nickname,
+          isError: this.nicknameError,
+          msg: this.nicknameErrorMsg,
+        },
+      ];
+      let count = 0;
+      for (let index in checkData) {
+        if (!checkData[index].isError && checkData[index].data.length > 0) {
+          count++;
+        }
+      }
+      return count == checkData.length;
+    },
+    callback() {
+      this.showAlert = false;
+      setTimeout(() => {
+        this.$router.push("/");
+      }, 500);
+    },
+  },
+  components: {
+    Alert,
   },
 };
 </script>
