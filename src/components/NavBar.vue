@@ -57,14 +57,12 @@
 </template>
 
 <script>
-import GlobalVue from "../config/Global.vue";
 import LoginModal from "./auth/LoginModal";
 
 export default {
   data() {
     return {
       showLoginModal: false,
-      features: GlobalVue.features,
       navbarStatus: {
         isFix: false,
         offsetTop: 0,
@@ -80,7 +78,7 @@ export default {
       return this.$store.getters.getIsLogin;
     },
     getRenderList() {
-      const result = GlobalVue.features.filter(
+      const result = this.$store.getters.getFeatures.filter(
         (target) => target.needLogin ===false || ( target.needLogin && this.getIsLogin)
       );
       return result;
@@ -89,6 +87,7 @@ export default {
   methods: {
     logout() {
       this.$store.dispatch("logout");
+      this.$router.push('/');
     },
   },
   components: {

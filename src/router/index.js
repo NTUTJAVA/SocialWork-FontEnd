@@ -8,14 +8,14 @@ const routes = [
     component: Home,
   },
   {
-    path: '/login',
-    name: 'login',
-    component: () => import('../components/auth/Login.vue')
-  },
-  {
     path: '/register',
     name: 'retister',
     component: () => import('../components/auth/Register.vue')
+  },
+  {
+    path: '/userinfo/:username?',
+    name: 'userinfo',
+    component: () => import('../components/auth/UserInfo.vue')
   },
 ]
 
