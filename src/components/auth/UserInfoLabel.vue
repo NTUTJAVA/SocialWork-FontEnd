@@ -265,9 +265,14 @@ export default {
       this.nickname = this.userInfo.nickname;
       if (!this.isEdit) {
         let id = this.$store.getters.getUserId;
-        let url = `/user/showEditBtn?username=${this.$route.params.username}`;
-        if (id != 0) url += `&userId=${id}`;
-        req("get", url)
+        let url = `/user/showEditBtn`;
+        let data = {
+          params: {
+            username: this.$route.params.username,
+            userId: id,
+          },
+        };
+        req("get", url, data)
           .then((resp) => {
             this.showEditBtn = resp.data;
           })
