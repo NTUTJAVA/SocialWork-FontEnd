@@ -1,11 +1,29 @@
 import axios from 'axios';
 import store from '../store';
+import router from '../router';
 
 
-const errorHandle = (status, msg) => {
+const errorHandle = (status, msg, data) => {
     switch (status) {
         case 500:
             alert(`server side error: ${msg}`);
+            store.dispatch("logout");
+            break;
+        case 401:
+            if (data.message == '認證失敗') {
+                alert("請登入後再執行")
+                store.dispatch("logout");
+                router.push("/");
+            } else {
+                alert(data)
+            }
+            break;
+        case 403:
+            console.log(`invalid user: ${msg}`);
+            if (msg == 'Expired JWT token') {
+                alert('請重新登入');
+            }
+            router.push("/");
             break;
     }
 }
@@ -37,7 +55,8 @@ instance.interceptors.response.use((response) => {
 }, (error) => {
     const { response } = error;
     if (response) {
-        errorHandle(response.status, response.data.error);
+        console.log(response);
+        errorHandle(response.status, response.data.error, response.data);
         return Promise.reject(error);
     } else {
         if (!window.navigator.onLine) {

@@ -42,7 +42,6 @@ export default {
     },
     setEdit(edit) {
       this.isEdit = edit;
-
     },
   },
   data() {
