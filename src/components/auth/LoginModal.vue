@@ -171,7 +171,7 @@ export default {
         .then((response) => {
           let res = response.data;
           this.$store.dispatch("setAuth", {
-            token: res.token,
+            token: res.jwtToken,
             nickname: res.usernickname,
             isLogin: true,
             userId: res.userId,
