@@ -29,8 +29,9 @@ export default {
   },
   methods: {
     getUserInfo() {
-      let username = this.$route.params.username;
-      let url = "/user/info/" + username;
+      const username = this.$route.params.username;
+      const userId = this.$store.getters.getUserId === 0? -1 : this.$store.getters.getUserId;
+      let url = `/user/info/${username}/${userId}`;
       this.isEdit = false;
       req("get", url)
         .then((resp) => {

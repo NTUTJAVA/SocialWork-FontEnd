@@ -264,21 +264,7 @@ export default {
       this.username = this.$route.params.username;
       this.nickname = this.userInfo.nickname;
       if (!this.isEdit) {
-        let id = this.$store.getters.getUserId;
-        let url = `/user/showEditBtn`;
-        let data = {
-          params: {
-            username: this.$route.params.username,
-            userId: id,
-          },
-        };
-        req("get", url, data)
-          .then((resp) => {
-            this.showEditBtn = resp.data;
-          })
-          .catch((error) => {
-            console.log(error.response.data);
-          });
+        this.showEditBtn = this.userInfo.canEdit;
       }
     },
   },
