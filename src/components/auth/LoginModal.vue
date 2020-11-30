@@ -21,6 +21,7 @@
                     v-model="loginData.username"
                     class="col-sm-8 col-md-8 col-lg-8"
                     type="text"
+                    ref="username"
                     required
                   />
                 </div>
@@ -170,10 +171,11 @@ export default {
         .then((response) => {
           let res = response.data;
           this.$store.dispatch("setAuth", {
-            token: res.token,
+            token: res.jwtToken,
             nickname: res.usernickname,
             isLogin: true,
-            userId: res.userId
+            userId: res.userId,
+            username: res.username,
           });
           this.loginData.username = "";
           this.loginData.password = "";
@@ -199,9 +201,15 @@ export default {
   mounted() {
     let self = this;
     window.addEventListener("keyup", function (event) {
-      // If  ESC key was pressed...
+      // If ESC key was pressed...
       if (event.keyCode === 27) {
         self.$emit("close");
+      }
+    });
+    window.addEventListener("keyup", function (event) {
+      // If enter key was pressed...
+      if (event.keyCode === 13) {
+        self.login();
       }
     });
   },

@@ -36,7 +36,7 @@
   justify-content: center;
 }
 .modal-confirm {
-  width: 400px;
+  width: 500px;
   box-sizing: border-box;
   margin-bottom: 15%;
   padding: 30px 40px;
@@ -67,7 +67,6 @@ export default {
     show: {
       type: Boolean,
       default: false,
-      //   required: true,
     },
     showOkBtn: {
       type: Boolean,

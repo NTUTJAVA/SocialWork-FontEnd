@@ -33,7 +33,6 @@
 }
 </style>
 <script>
-import GlobalVue from "../config/Global.vue";
 export default {
   data() {
     return {
@@ -48,7 +47,7 @@ export default {
       return this.$store.getters.getIsLogin;
     },
     getRenderList() {
-      const result = GlobalVue.features.filter(
+      const result = this.$store.getters.getFeatures.filter(
         (target) =>
           target.needLogin === false || (target.needLogin && this.getIsLogin)
       );
